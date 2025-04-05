@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Honda Motorcycles</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #f8f9fa;
+      color: #333;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background-color: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo img {
+      height: 45px;
+      transition: transform 0.3s ease;
+    }
+
+    .logo img:hover {
+      transform: scale(1.05);
+    }
+
+    .search img {
+      height: 55px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .search img:hover {
+      transform: scale(1.1);
+    }
+
+    /* Banner Section with Slider */
+    .slider-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .slider-wrapper {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+      min-width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    /* Dot Navigation */
+    .dot-container {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin: 0 5px;
+      border-radius: 50%;
+      background-color: #bbb;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .dot.active {
+      background-color: #ff0000;
+    }
+
+    /* Product Section */
+    .products {
+      padding: 20px 20px 50px;
+      text-align: center;
+    }
+
+    .products h2 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: #222;
+    }
+
+    .categories {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .categories button {
+      padding: 10px 25px;
+      border: none;
+      background-color: #e9ecef;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 15px;
+      border-radius: 25px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .categories button:hover {
+      background-color: #ff0000;
+      color: #fff;
+    }
+
+    .categories button.active {
+      background-color: #ff0000;
+      color: #fff;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 0 10px;
+    }
+
+    .product-card {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: none;
+      min-height: 320px;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .product-card.active {
+      display: flex;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-card img {
+      max-width: 100%;
+      height: 150px;
+      object-fit: contain;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .product-card h3 {
+      margin: 10px 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: #222;
+    }
+
+    .price-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0;
+      flex-wrap: wrap;
+    }
+
+    .price-discount {
+      text-decoration: line-through;
+      color: #666;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .price-new {
+      color: #e60000;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .price-new::before {
+      content: "*DP ";
+      font-size: 12px;
+      font-weight: 400;
+      color: #e60000;
+    }
+
+    .chat-sales-btn {
+      display: inline-block;
+      padding: 8px 15px;
+      background-color: #25D366;
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 20px;
+      transition: background-color 0.3s ease;
+      align-self: center;
+      margin-top: auto;
+    }
+
+    .chat-sales-btn:hover {
+      background-color: #20b858;
+    }
+
+    .new-label {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background-color: #ff0000;
+      color: #fff;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 20px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 25px;
+      background-color: #222;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1366px) {
+      .slide {
+        height: auto;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 10px 15px;
+      }
+
+      .logo img {
+        height: 35px;
+      }
+
+      .products h2 {
+        font-size: 26px;
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      }
+
+      .product-card {
+        min-height: 300px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .products {
+        padding: 15px 10px 30px;
+      }
+
+      .products h2 {
+        font-size: 22px;
+      }
+
+      .product-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .product-card {
+        padding: 15px;
+        min-height: 280px;
+      }
+
+      .product-card h3 {
+        font-size: 16px;
+      }
+
+      .price-new {
+        font-size: 14px;
+      }
+
+      .price-discount {
+        font-size: 12px;
+      }
+
+      .chat-sales-btn {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+
+      .categories button {
+        padding: 8px 15px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/assets/images/logo/honda.svg" alt="Honda Logo">
+    </div>
+    <div class="search">
+      <img src="https://1.bp.blogspot.com/-Y6PVqn1R9_M/X0Pc81ezMJI/AAAAAAAA_GQ/lzhJlFahlbUrGW8uEtYpH2bMHmEG-TRXwCNcBGAsYHQ/w680/nss.jpg" alt="Search">
+    </div>
+  </header>
+
+  <!-- Banner Section with Slider -->
+  <section class="banner">
+    <div class="slider-container">
+      <div class="slider-wrapper">
+        <img class="slide" src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-1366,h-573,pr-true,f-auto/uploads/page/banner/homebanner-cbr150r-2024-1366x573px-1-31102024-034442.jpg" alt="Banner 1">
+        <img class="slide" src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-1200,pr-true,f-auto/uploads/page/banner/homepage-banner-1366x573px-06122024-053200.jpg" alt="Banner 2">
+        <img class="slide" src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-1200,pr-true,f-auto/uploads/page/banner/home-banner-beat-12-03062024-101449.jpg" alt="Banner 3">
+      </div>
+    </div>
+    <div class="dot-container">
+      <span class="dot active" data-index="0"></span>
+      <span class="dot" data-index="1"></span>
+      <span class="dot" data-index="2"></span>
+    </div>
+  </section>
+
+  <!-- Product Section -->
+  <section class="products">
+    <h2>Pilih Motor Honda Favorit Anda</h2>
+    <div class="categories">
+      <button class="category-btn active" data-category="matic">Matic</button>
+      <button class="category-btn" data-category="sport">Sport</button>
+      <button class="category-btn" data-category="cub">Cub</button>
+      <button class="category-btn" data-category="evbike">EV Bike</button>
+    </div>
+    <div class="product-grid">
+      <!-- Matic Products -->
+      <div class="product-card matic">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/deluxe-black1-03062024-064019.png" alt="BeAT Deluxe">
+        <h3>BeAT Deluxe</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 3.300.000</span>
+          <span class="price-new">Rp 2.200.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="BeAT Deluxe" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card matic">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/matte-blue-2-03062024-045618.png" alt="BeAT Deluxe Smart Key">
+        <h3>BeAT Deluxe Smart Key</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 3.300.000</span>
+          <span class="price-new">Rp 2.200.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="BeAT Deluxe Smart Key" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card matic">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/beat-street-varian-515x504-01-1-03062024-064204.png" alt="BeAT Sporty CBS">
+        <h3>BeAT Sporty CBS</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 3.150.000</span>
+          <span class="price-new">Rp 2.000.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="BeAT Sporty CBS" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card matic">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/beat-street-varian-515x504-brown-2-03062024-045126.png" alt="BeAT Street">
+        <h3>BeAT Street</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 2.500.000</span>
+          <span class="price-new">Rp 2.100.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="BeAT Street" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card matic">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/7-25-05112024-030746.png" alt="Scoopy Stylish">
+        <h3>Scoopy Stylish</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 3.500.000</span>
+          <span class="price-new">Rp 2.500.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="Scoopy Stylish" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card matic">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/6-33-05112024-030712.png" alt="Scoopy Prestige">
+        <h3>Scoopy Prestige</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 2.600.000</span>
+          <span class="price-new">Rp 2.500.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="Scoopy Prestige" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card matic">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/4-38-05112024-030758.png" alt="Scoopy Fashion">
+        <h3>Scoopy Fashion</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 3.500.000</span>
+          <span class="price-new">Rp 2.500.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="Scoopy Fashion" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card matic">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/1-60-05112024-030828.png" alt="Scoopy Energetic">
+        <h3>Scoopy Energetic</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 3.500.000</span>
+          <span class="price-new">Rp 2.500.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="Scoopy Energetic" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card matic">
+        <span class="new-label">New!</span>
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/variant-web-roadsync-red-515x504px-r5-06122024-030945.png" alt="PCX 160 RS">
+        <h3>PCX 160 RS</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 5.700.000</span>
+          <span class="price-new">Rp 4.200.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="PCX 160 RS" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card matic">
+        <span class="new-label">New!</span>
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/variant-web-abs-phenomenal-white-515x504px-r5-06122024-031050.png" alt="PCX 160 ABS">
+        <h3>PCX 160 ABS</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 4.900.000</span>
+          <span class="price-new">Rp 3.700.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="PCX 160 ABS" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card matic">
+        <span class="new-label">New!</span>
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/variant-web-cbs-exceptional-matte-silver-515x504px-r5-1-06122024-031207.png" alt="PCX 160 CBS">
+        <h3>PCX 160 CBS</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 4.700.000</span>
+          <span class="price-new">Rp 3.500.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="PCX 160 CBS" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card matic">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto/uploads/product/thumbnail/thumbnail-acc-6-25072023-093811.png" alt="Genio CBS-ISS">
+        <h3>Genio CBS-ISS</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 3.100.000</span>
+          <span class="price-new">Rp 2.300.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="Genio CBS-ISS" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card matic">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/cbs-radiant-red-black-515x504-tr-3-25072023-093604.png" alt="Genio CBS">
+        <h3>Genio CBS</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 3.000.000</span>
+          <span class="price-new">Rp 2.200.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="Genio CBS" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card matic">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/warna-vario160-grande-matte-blue-abs-515x504-tr-10012024-040236.png" alt="Vario 160 ABS">
+        <h3>Vario 160 ABS</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 4.500.000</span>
+          <span class="price-new">Rp 3.300.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="Vario 160 ABS" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card matic">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/var160-black-matte-cbs-10012024-040557.png" alt="Vario 160 CBS Active">
+        <h3>Vario 160 CBS Active</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 4.300.000</span>
+          <span class="price-new">Rp 3.000.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="Vario 160 CBS Active" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card matic">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/v125-variant-web-matte-red-cbs-515x504px-1-01042024-031801-02042024-061006.png" alt="Vario 125 CBS-ISS">
+        <h3>Vario 125 CBS-ISS</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 2.800.000</span>
+          <span class="price-new">Rp 2.650.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="Vario 125 CBS-ISS" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card matic">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/v125-variant-web-black-red-abs-515x504px-1-01042024-031823-02042024-061030.png" alt="Vario 125 CBS">
+        <h3>Vario 125 CBS</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 2.800.000</span>
+          <span class="price-new">Rp 2.450.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="Vario 125 CBS" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card matic">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/new-glossy-beige-30012024-125435-02022024-040103.png" alt="Stylo CBS">
+        <h3>Stylo CBS</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 4.700.000</span>
+          <span class="price-new">Rp 2.900.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="Stylo CBS" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card matic">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/new-glossy-green-30012024-125357-02022024-040006.png" alt="Stylo ABS">
+        <h3>Stylo ABS</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 4.800.000</span>
+          <span class="price-new">Rp 3.200.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="Stylo ABS" target="_blank">Chat Sales</a>
+      </div>
+      <!-- Sport Products -->
+      <div class="product-card sport">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/ahm-cbr150r-red-racing-515x504px-1-23102024-070622.png" alt="CBR150R Non ABS Type">
+        <h3>CBR150R Non ABS Type</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 5.200.000</span>
+          <span class="price-new">Rp 3.900.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="CBR150R Non ABS Type" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card sport">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto/uploads/product/thumbnail/sonic-150r-550x413px-r1-22112024-041432.png" alt="Sonic 150R">
+        <h3>Sonic 150R</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 4.600.000</span>
+          <span class="price-new">Rp 3.100.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="Sonic 150R" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card sport">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product/colors/bold-red-1-15062021-064334.png" alt="CB150 Verza">
+        <h3>CB150 Verza</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 4.800.000</span>
+          <span class="price-new">Rp 3.600.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="CB150 Verza" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card sport">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product/colors/new-extreme-white-1-25102021-084947.jpg" alt="CRF150L">
+        <h3>CRF150L</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 5.500.000</span>
+          <span class="price-new">Rp 4.000.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="CRF150L" target="_blank">Chat Sales</a>
+      </div>
+      <!-- Cub Products -->
+      <div class="product-card cub">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/attractive-red-2-24012022-110047.jpg" alt="Revo X">
+        <h3>Revo X</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 2.500.000</span>
+          <span class="price-new">Rp 2.000.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="Revo X" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card cub">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/raving-red-2-24012022-110055.jpg" alt="Revo Fit FI">
+        <h3>Revo Fit FI</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 2.000.000</span>
+          <span class="price-new">Rp 1.850.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="Revo Fit FI" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card cub">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product/colors/exclusive-matte-red-1-16042021-015554.jpg" alt="Supra GTR 150">
+        <h3>Supra GTR 150</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 3.000.000</span>
+          <span class="price-new">Rp 2.800.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="Supra GTR 150" target="_blank">Chat Sales</a>
+      </div>
+      <!-- EV Bike Products -->
+      <div class="product-card evbike">
+        <span class="new-label">New!</span>
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/warna-em1-silver-515x504-tr-21122023-045454.png" alt="EM1 e: & EM1 e: PLUS">
+        <h3>EM1 e: & EM1 e: PLUS</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 6.900.000</span>
+          <span class="price-new">Rp 4.200.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="EM1 e: & EM1 e: PLUS" target="_blank">Chat Sales</a>
+      </div>
+      <div class="product-card evbike">
+        <img src="https://ik.imagekit.io/zlt25mb52fx/ahmcdn/tr:w-550,f-auto,pr-true/uploads/product-draft/colors/515-x-504-02-1-3-09102024-125729.png" alt="CUV e: & CUV e: RoadSync Duo">
+        <h3>CUV e: & CUV e: RoadSync Duo</h3>
+        <div class="price-container">
+          <span class="price-discount">Rp 7.000.000</span>
+          <span class="price-new">Rp 4.500.000</span>
+        </div>
+        <a href="https://wa.me/+6281528458722" class="chat-sales-btn" data-product="CUV e: & CUV e: RoadSync Duo" target="_blank">Chat Sales</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Sales Ahmad Amrina Rasyada. All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript for Banner Slider, Category Filtering, and WhatsApp Chat -->
+  <script>
+    // Banner Slider
+    const sliderWrapper = document.querySelector('.slider-wrapper');
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    let index = 0;
+
+    function updateSlide() {
+      sliderWrapper.style.transform = `translateX(-${index * 100}%)`;
+      dots.forEach(dot => dot.classList.remove('active'));
+      dots[index].classList.add('active');
+    }
+
+    setInterval(() => {
+      index = (index + 1) % slides.length;
+      updateSlide();
+    }, 5000);
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        index = parseInt(dot.getAttribute('data-index'));
+        updateSlide();
+      });
+    });
+
+    // Category Filtering
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    const productCards = document.querySelectorAll('.product-card');
+
+    function showCategory(category) {
+      productCards.forEach(card => {
+        if (card.classList.contains(category)) {
+          card.classList.add('active');
+        } else {
+          card.classList.remove('active');
+        }
+      });
+    }
+
+    categoryButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        categoryButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        const selectedCategory = button.getAttribute('data-category');
+        showCategory(selectedCategory);
+      });
+    });
+
+    // Tampilkan kategori "Matic" saat halaman pertama dimuat
+    document.addEventListener('DOMContentLoaded', () => {
+      showCategory('matic');
+    });
+
+    // WhatsApp Chat Customization
+    const chatButtons = document.querySelectorAll('.chat-sales-btn');
+    const phoneNumber = '+6281528458722';
+
+    chatButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault(); // Mencegah tautan default langsung terbuka
+        const productName = button.getAttribute('data-product');
+        const message = encodeURIComponent(`Halo, saya tertarik dengan ${productName}. Apakah masih tersedia?`);
+        const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
+        window.open(whatsappURL, '_blank'); // Membuka WhatsApp di tab baru
+      });
+    });
+  </script>
+</body>
+</html>
