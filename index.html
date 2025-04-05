@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Honda NSS By Sales Amrina</title>
+  <title>Honda Motorcycles</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * {
@@ -316,9 +316,44 @@
         font-size: 13px;
       }
     }
+    /* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%; /* Adjusted for better responsiveness */
+    max-height: 90%; /* Adjusted for better responsiveness */
+    opacity: 0.8; /* Set opacity for transparency */
+    transition: opacity 0.3s ease; /* Smooth transition for opacity */
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
   </style>
 </head>
 <body>
+  <img class="modal-content" src="motor-transparan.png" />
+
   <!-- Header -->
   <header>
     <div class="logo">
@@ -618,6 +653,12 @@
     </div>
   </section>
 
+  <!-- Modal for Image Preview -->
+<div id="imageModal" class="modal">
+  <span class="close" id="closeModal">&times;</span>
+  <img class="modal-content" id="modalImage" alt="Modal Image">
+</div>
+
   <!-- Footer -->
   <footer>
     <p>© 2025 Sales Ahmad Amrina Rasyada. All rights reserved.</p>
@@ -625,6 +666,30 @@
 
   <!-- JavaScript for Banner Slider, Category Filtering, and WhatsApp Chat -->
   <script>
+
+    // Image Modal Functionality
+const productImages = document.querySelectorAll('.product-card img');
+const modal = document.getElementById('imageModal');
+const modalImage = document.getElementById('modalImage');
+const closeModal = document.getElementById('closeModal');
+
+productImages.forEach(image => {
+    image.addEventListener('click', () => {
+        modal.style.display = 'flex';
+        modalImage.src = image.src; // Set the modal image source to the clicked image
+    });
+});
+
+closeModal.addEventListener('click', () => {
+    modal.style.display = 'none'; // Close the modal
+});
+
+// Close modal when clicking outside of the image
+window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+});
     // Banner Slider
     const sliderWrapper = document.querySelector('.slider-wrapper');
     const slides = document.querySelectorAll('.slide');
